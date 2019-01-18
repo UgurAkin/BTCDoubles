@@ -12,6 +12,7 @@ MainSourceFolder := $(ProjectPath)/Source
 
 BuildPath := $(ProjectPath)/Build
 ObjectPath := $(BuildPath)/Objects
+BinPath := $(BuildPath)/Bin
 
 CPPFLAGS += -I $(HeaderFolder)
 
@@ -21,16 +22,14 @@ SrcExtension := .cpp
 
 HeaderNames := $(basename $(notdir $(wildcard $(HeaderFolder)/*.h)))
 ObjectNames := $(basename $(notdir $(wildcard $(ImplementationFolder)/*.cpp)))
-MainSourceName := main
-
-Exe := $(ProjectPath)/$(MainSourceName);
+ExecutableNames := $(basename $(notdir $(wildcard $(MainSourceFolder)/*.cpp)))
 
 Objects := $(addsuffix $(ObjExtension),$(addprefix $(ObjectPath)/,$(ObjectNames)))
-MainSource := $(addsuffix $(SrcExtension),$(addprefix $(MainSourceFolder)/,$(MainSourceName)))
+Executables := $(addprefix $(BinPath)/,$(ExecutableNames))
 
-all: $(Exe)
+all: $(Executables)
 #	@echo $(Objects)
-#	@echo $(Exe)
+#	@echo $(Executables)
 #	@echo $(Objs)
 # 	@echo $(MAKEFILE_LIST)
 # 	@echo $(ProjectPath)
@@ -47,14 +46,14 @@ all: $(Exe)
 $(ObjectPath)/%.o: $(ImplementationFolder)/%.cpp init_build_dir
 	@$(CC) $(CPPFLAGS) -c -o $@ $<
 
-# $(Exe): $(Objects)
-$(ProjectPath)/$(MainSourceName): $(Objects) $(MainSource)
+$(BinPath)/%: $(MainSourceFolder)/%.cpp $(Objects)
 	@$(CC) $(CPPFLAGS) -o $@ $^
 
 init_build_dir:
 	@mkdir --parents $(ObjectPath)
+	@mkdir --parents $(BinPath)
 
 .PHONY: clean
 
 clean: 
-	@rm -f $(ObjectPath)/*.o $(Exe)
+	@rm -f $(ObjectPath)/*.o $(Executables)

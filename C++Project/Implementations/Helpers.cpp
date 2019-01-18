@@ -19,45 +19,26 @@
  * TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-
-#ifndef __USER_LIST
-#define __USER_LIST
-
+#include "Helpers.h"
 #include <vector>
-#include <memory>
-#include "User.h"
+#include <iostream>
+#include <string>
+#include <random>
+#include <algorithm>
 
-class UserList : public vector<User*>
-{	
-	static const char DELIM = ',';
-		
-	public:
-
-	enum class WR_FORMAT {
-		PLAIN,
-		CSV
-	};
-
-	~UserList(){
-		for(auto user : *this){
-			delete user;
-		}
-	}
-
-	void orderByAscending(User::PROPERTIES);
-	void orderByDescending(User::PROPERTIES );
-	bool save(const string&, const WR_FORMAT format = WR_FORMAT::CSV);
-
-	static UserList* loadFromFile(const std::string& );
-	static bool writeToFile(const std::string&, const UserList&, const WR_FORMAT format = WR_FORMAT::CSV);
-	
-	//TODO: Add ostream& operator<< and toString (with proper formatting)
-	std::string toString() const;
-	std::string toCSV() const;
-	friend ostream& operator<< (ostream&, const UserList& );
-
-};
-
-
-
-#endif //__USER_LIST
+std::vector<std::string> Helpers::split(char delim, const std::string &str)
+{
+	std::vector<std::string> tokens;
+	size_t prev = 0, pos = 0;
+	do
+	{
+		pos = str.find(delim, prev);
+		if (pos == std::string::npos)
+			pos = str.length();
+		std::string token = str.substr(prev, pos - prev);
+		if (!token.empty())
+			tokens.push_back(token);
+		prev = pos + 1;
+	} while (pos < str.length() && prev < str.length());
+	return tokens;
+}

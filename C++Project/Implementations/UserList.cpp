@@ -20,6 +20,7 @@
  */
 
 #include "UserList.h"
+#include "Helpers.h"
 #include <algorithm>
 #include <fstream>
 #include <string>
@@ -39,22 +40,6 @@ struct ReadFileException : public std::exception
 	}
 };
 
-vector<std::string> UserList::split(char delim, const std::string &str)
-{
-	vector<string> tokens;
-	size_t prev = 0, pos = 0;
-	do
-	{
-		pos = str.find(delim, prev);
-		if (pos == string::npos)
-			pos = str.length();
-		string token = str.substr(prev, pos - prev);
-		if (!token.empty())
-			tokens.push_back(token);
-		prev = pos + 1;
-	} while (pos < str.length() && prev < str.length());
-	return tokens;
-}
 
 void UserList::orderByAscending(User::PROPERTIES orderProperty)
 {
@@ -130,7 +115,7 @@ UserList *UserList::loadFromFile(const string &fileURI)
 			int lineIndex = 0;
 			while (std::getline(ifs, line))
 			{
-				auto tokens = split(DELIM, line);
+				auto tokens = Helpers::split(DELIM, line);
 				if (tokens.size() != User::AMT_PROPERTIES)
 				{
 					throw ReadFileException("Corrupted line in file, at line " + std::to_string(lineIndex));

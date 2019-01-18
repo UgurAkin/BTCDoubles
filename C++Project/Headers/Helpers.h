@@ -19,45 +19,15 @@
  * TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-
-#ifndef __USER_LIST
-#define __USER_LIST
+#ifndef __HELPERS_H_
+#define __HELPERS_H_
 
 #include <vector>
-#include <memory>
-#include "User.h"
+#include <string>
 
-class UserList : public vector<User*>
-{	
-	static const char DELIM = ',';
-		
-	public:
-
-	enum class WR_FORMAT {
-		PLAIN,
-		CSV
-	};
-
-	~UserList(){
-		for(auto user : *this){
-			delete user;
-		}
-	}
-
-	void orderByAscending(User::PROPERTIES);
-	void orderByDescending(User::PROPERTIES );
-	bool save(const string&, const WR_FORMAT format = WR_FORMAT::CSV);
-
-	static UserList* loadFromFile(const std::string& );
-	static bool writeToFile(const std::string&, const UserList&, const WR_FORMAT format = WR_FORMAT::CSV);
-	
-	//TODO: Add ostream& operator<< and toString (with proper formatting)
-	std::string toString() const;
-	std::string toCSV() const;
-	friend ostream& operator<< (ostream&, const UserList& );
-
+struct Helpers {
+    static std::vector<std::string> split(char, const std::string& );
 };
 
 
-
-#endif //__USER_LIST
+#endif //__HELPERS_H_
