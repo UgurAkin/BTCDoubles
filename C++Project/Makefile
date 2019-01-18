@@ -8,7 +8,7 @@ CPPFLAGS :=
 ProjectPath := $(subst /Makefile,,$(abspath $(lastword $(MAKEFILE_LIST))))
 HeaderFolder := $(ProjectPath)/Headers
 ImplementationFolder := $(ProjectPath)/Implementations
-MainSourceFolder := $(ProjectPath)/MainSource
+MainSourceFolder := $(ProjectPath)/Source
 
 BuildPath := $(ProjectPath)/Build
 ObjectPath := $(BuildPath)/Objects
@@ -22,11 +22,12 @@ HeaderNames := $(basename $(notdir $(wildcard $(HeaderFolder)/*.h)))
 ObjectNames := $(basename $(notdir $(wildcard $(ImplementationFolder)/*.cpp)))
 MainSourceName := main
 
-Exe := $(ProjectPath)/main;
+Exe := $(ProjectPath)/$(MainSourceName);
 
 Objects := $(addsuffix $(ObjExtension),$(addprefix $(ObjectPath)/,$(ObjectNames)))
+MainSource := $(addsuffix $(SrcExtension),$(addprefix $(MainSourceFolder)/,$(MainSourceName)))
 
-all: main
+all: $(Exe)
 #	@echo $(Objects)
 #	@echo $(Exe)
 #	@echo $(Objs)
@@ -36,7 +37,7 @@ all: main
 # # 	@echo $(MainSourceFolder)
 # 	@echo $(ImplementationFolder)
 # #	@echo $(Headers)
-	@echo $(Implementations)
+#	@echo $(Implementations)
 # #	@echo $(MainSource)
 
 # 	ls $(ImplementationFolder)
@@ -45,7 +46,8 @@ all: main
 $(ObjectPath)/%.o: $(ImplementationFolder)/%.cpp init_build_dir
 	$(CC) $(CPPFLAGS) -c -o $@ $<
 
-main: $(Objects)
+# $(Exe): $(Objects)
+$(ProjectPath)/$(MainSourceName): $(Objects) $(MainSource)
 	$(CC) $(CPPFLAGS) -o $@ $<
 
 init_build_dir:
