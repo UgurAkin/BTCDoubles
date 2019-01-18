@@ -56,6 +56,7 @@ class User
 
 	//TODO: Add formatting to toString
 	string toString() const;
+	string toCSV() const;
 	friend ostream &operator<<(ostream&, const User&);
 };
 

@@ -28,7 +28,8 @@ struct ReadFileException : public std::exception
 {
 	string reason;
 
-	ReadFileException(string reason){
+	ReadFileException(string reason)
+	{
 		this->reason = reason;
 	}
 
@@ -109,7 +110,14 @@ void UserList::orderByDescending(User::PROPERTIES orderProperty)
 	std::sort(this->begin(), this->end(), comparisonFunction);
 }
 
-UserList* UserList::loadFromFile(const string &fileURI)
+bool UserList::save(
+	const std::string& fileURI, 
+	const UserList::WR_FORMAT format) 
+{
+	return UserList::writeToFile(fileURI, *this, format);
+}
+
+UserList *UserList::loadFromFile(const string &fileURI)
 {
 	ifstream ifs;
 	ifs.open(fileURI, std::fstream::in);
@@ -145,7 +153,51 @@ UserList* UserList::loadFromFile(const string &fileURI)
 			ifs.close();
 			return result;
 		}
-		else{
+		else
+		{
+			throw ReadFileException("Failed to locate file, file URI: " + fileURI);
+		}
+	}
+	catch (ReadFileException &e)
+	{
+		std::cout << e.what();
+	}
+	catch (exception &e)
+	{
+		std::cout << e.what();
+	}
+}
+
+bool UserList::writeToFile(
+	const std::string &fileURI, 
+	const UserList &users, 
+	const  UserList::WR_FORMAT format)
+{
+	ofstream ofs;
+	ofs.open(fileURI, ofstream::out | ofstream::trunc);
+	try
+	{
+		if (ofs.is_open())
+		{
+			string str = "";
+			
+			switch (format)
+			{
+				
+				case UserList::WR_FORMAT::PLAIN:
+					str = users.toString();
+					break;
+				default:
+				case UserList::WR_FORMAT::CSV:
+					str = users.toCSV();
+					break;
+			}
+			
+			ofs << str;
+			return true;
+		}
+		else
+		{
 			throw ReadFileException("Failed to locate file, file URI: " + fileURI);
 		}
 		
@@ -158,4 +210,25 @@ UserList* UserList::loadFromFile(const string &fileURI)
 	{
 		std::cout << e.what();
 	}
+	return false;
+}
+
+std::string UserList::toString() const {
+	std::string result = "";
+	for(User* user : *this){
+		result += user->toString() + "\n";
+	}
+	return result;
+}
+
+std::string UserList::toCSV() const {
+	std::string result = "";
+	for(User* user : *this){
+		result += user->toCSV() + "\n";
+	}
+	return result;
+}
+
+ostream& operator<< (ostream& os, const UserList& users){
+	return os << users.toString();
 }

@@ -63,6 +63,10 @@ string User::toString() const{
 	return std::to_string(this->rank) + ", " + getFullName();
 }
 
+string User::toCSV() const {
+	return std::to_string(this->rank) + "," + this->firstName + "," + this->lastName;
+}
+
 ostream& operator<<(ostream& os, const User& user) {
 	return os << user.toString();
 }

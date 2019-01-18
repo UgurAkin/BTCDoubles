@@ -35,6 +35,11 @@ class UserList : public vector<User*>
 	
 	public:
 
+	enum class WR_FORMAT {
+		PLAIN,
+		CSV
+	};
+
 	~UserList(){
 		for(auto user : *this){
 			delete user;
@@ -43,9 +48,16 @@ class UserList : public vector<User*>
 
 	void orderByAscending(User::PROPERTIES);
 	void orderByDescending(User::PROPERTIES );
-	static UserList* loadFromFile(const std::string& ); 
+	bool save(const string&, const WR_FORMAT format = WR_FORMAT::CSV);
+
+	static UserList* loadFromFile(const std::string& );
+	static bool writeToFile(const std::string&, const UserList&, const WR_FORMAT format = WR_FORMAT::CSV);
 	
 	//TODO: Add ostream& operator<< and toString (with proper formatting)
+	std::string toString() const;
+	std::string toCSV() const;
+	friend ostream& operator<< (ostream&, const UserList& );
+
 };
 
 
