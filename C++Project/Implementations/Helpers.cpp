@@ -20,11 +20,13 @@
  */
 
 #include "Helpers.h"
+#include "Exceptions.h"
 #include <vector>
 #include <iostream>
 #include <string>
 #include <random>
 #include <algorithm>
+#include <fstream>
 
 std::vector<std::string> Helpers::split(char delim, const std::string &str)
 {
@@ -41,4 +43,40 @@ std::vector<std::string> Helpers::split(char delim, const std::string &str)
 		prev = pos + 1;
 	} while (pos < str.length() && prev < str.length());
 	return tokens;
+}
+
+
+std::vector<std::string> Helpers::readLinesInFile(const std::string& fileURI)
+{
+	std::ifstream ifs;
+	ifs.open(fileURI, std::fstream::in);
+	try
+	{
+		if (ifs.is_open())
+		{
+			std::vector<std::string> result = std::vector<std::string>();
+			std::string line = "";
+			int lineIndex = 0;
+			while (std::getline(ifs, line))
+			{
+
+				result.push_back(line);
+				lineIndex++;
+			}
+			ifs.close();
+			return result;
+		}
+		else
+		{
+			throw ReadFileException("Failed to locate file, file URI: " + fileURI);
+		}
+	}
+	catch (ReadFileException &e)
+	{
+		std::cout << e.what();
+	}
+	catch (exception &e)
+	{
+		std::cout << e.what();
+	}
 }

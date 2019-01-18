@@ -19,16 +19,14 @@
  * TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-#ifndef __HELPERS_H_
-#define __HELPERS_H_
+#include "Exceptions.h"
 
-#include <vector>
-#include <string>
+ReadFileException::ReadFileException(const std::string& reason)
+{
+    this->reason = reason;
+}
 
-struct Helpers {
-    static std::vector<std::string> split(char, const std::string& );
-    static std::vector<std::string> readLinesInFile(const std::string& );
-};
-
-
-#endif //__HELPERS_H_
+const char* ReadFileException::what() const throw()
+{
+    return reason.c_str();
+}

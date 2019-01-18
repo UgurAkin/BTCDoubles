@@ -21,25 +21,10 @@
 
 #include "UserList.h"
 #include "Helpers.h"
+#include "Exceptions.h"
 #include <algorithm>
 #include <fstream>
 #include <string>
-
-struct ReadFileException : public std::exception
-{
-	string reason;
-
-	ReadFileException(string reason)
-	{
-		this->reason = reason;
-	}
-
-	const char *what() const throw()
-	{
-		return reason.c_str();
-	}
-};
-
 
 void UserList::orderByAscending(User::PROPERTIES orderProperty)
 {

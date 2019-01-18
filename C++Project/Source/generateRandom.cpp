@@ -22,8 +22,16 @@
 #include "User.h"
 #include "UserList.h"
 #include <iostream>
+#include <fstream>
 
 int main(){
     std::string filePath = "TextFiles/RandomNames.txt";
+    ifstream ifs;
+    ifs.open(filePath, fstream::in);
+    if(ifs.is_open()){
+        
 
+
+        randomTakeN()
+    }
 }
