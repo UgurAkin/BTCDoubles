@@ -2,7 +2,7 @@
 
 # Compiler & Flags
 CC := g++
-CPPFLAGS := 
+CPPFLAGS :=
 
 # Folders
 ProjectPath := $(subst /Makefile,,$(abspath $(lastword $(MAKEFILE_LIST))))
@@ -13,6 +13,7 @@ MainSourceFolder := $(ProjectPath)/Source
 BuildPath := $(ProjectPath)/Build
 ObjectPath := $(BuildPath)/Objects
 
+CPPFLAGS += -I $(HeaderFolder)
 
 # Files
 ObjExtension := .o
@@ -44,16 +45,16 @@ all: $(Exe)
 
 
 $(ObjectPath)/%.o: $(ImplementationFolder)/%.cpp init_build_dir
-	$(CC) $(CPPFLAGS) -c -o $@ $<
+	@$(CC) $(CPPFLAGS) -c -o $@ $<
 
 # $(Exe): $(Objects)
 $(ProjectPath)/$(MainSourceName): $(Objects) $(MainSource)
-	$(CC) $(CPPFLAGS) -o $@ $<
+	@$(CC) $(CPPFLAGS) -o $@ $^
 
 init_build_dir:
-	mkdir --parents $(ObjectPath)
+	@mkdir --parents $(ObjectPath)
 
 .PHONY: clean
 
 clean: 
-	rm -f $(ObjectPath)/*.o $(Exe)
+	@rm -f $(ObjectPath)/*.o $(Exe)
