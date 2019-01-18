@@ -49,6 +49,7 @@ $(ObjectPath)/%.o: $(ImplementationFolder)/%.cpp init_build_dir
 $(BinPath)/%: $(MainSourceFolder)/%.cpp $(Objects)
 	@$(CC) $(CPPFLAGS) -o $@ $^
 
+
 init_build_dir:
 	@mkdir --parents $(ObjectPath)
 	@mkdir --parents $(BinPath)
