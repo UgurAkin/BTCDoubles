@@ -30,26 +30,33 @@ class User
 
 	string firstName;
 	string lastName;
-	int rank;
-  public:
+	unsigned int rank;
 
-	static const int UNRANKED = 0;
+  public:
+	static const unsigned int AMT_PROPERTIES = 3;
+	static const unsigned int UNRANKED = 0;
+	enum struct PROPERTIES {
+		FIRST = 1,
+		LAST = 2,
+		RANK = 0
+	};
 
 	User();
 	User(string, string);
 	User(string, string, int);
 
-	string getFirstName();
-	string getLastName();
-	string getFullName();
+	string getFirstName() const;
+	string getLastName() const;
+	string getFullName() const;
 
-	int getRank();
-	void updateRank(int );
+	unsigned int getRank() const;
+	void updateRank(unsigned int );
 
 	User &operator=(const User&);
 
-	string toString();
-	ostream &operator<<(ostream&);
+	//TODO: Add formatting to toString
+	string toString() const;
+	friend ostream &operator<<(ostream&, const User&);
 };
 
 #endif //__CLUB_USER

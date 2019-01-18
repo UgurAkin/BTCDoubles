@@ -23,26 +23,30 @@
 #ifndef __USER_LIST
 #define __USER_LIST
 
-
-#include <iostream>
 #include <vector>
+#include <memory>
 #include "User.h"
 
-class UserList : public vector<User>
+class UserList : public vector<User*>
 {	
-
+	static const char DELIM = ',';
+	
+	static vector<std::string> split(char, const std::string &);
+	
 	public:
 
-	static enum Ordering {
-		FIRST,
-		LAST,
-		RANK
-	};
+	~UserList(){
+		for(auto user : *this){
+			delete user;
+		}
+	}
 
-	void orderBy(Ordering );
-	static UserList& loadFromFile(string fileURI ); 
+	void orderByAscending(User::PROPERTIES);
+	void orderByDescending(User::PROPERTIES );
+	static UserList* loadFromFile(const std::string& ); 
 	
-}
+	//TODO: Add ostream& operator<< and toString (with proper formatting)
+};
 
 
 

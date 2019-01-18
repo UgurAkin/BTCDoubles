@@ -34,23 +34,23 @@ User::User(string first, string last, int rank){
 	this->rank = rank;
 }
 
-string User::getFirstName(){
+string User::getFirstName() const{
 	return this->firstName;
 }
 
-string User::getLastName(){
+string User::getLastName() const {
 	return this->lastName;
 }
 
-string User::getFullName(){
+string User::getFullName() const {
 	return this->firstName + " " + this->lastName;
 }
 
-int User::getRank(){
+unsigned int User::getRank() const {
 	return this->rank;
 }
 
-void User::updateRank(int newRank){
+void User::updateRank(unsigned int newRank){
 	this->rank = newRank;
 }
 
@@ -59,10 +59,10 @@ User& User::operator=(const User& other){
 	this->lastName = other.lastName;
 }
 
-string User::toString(){
-	return getFullName();
+string User::toString() const{
+	return std::to_string(this->rank) + ", " + getFullName();
 }
 
-ostream& User::operator<<(ostream& os){
-	return os << this->toString();
+ostream& operator<<(ostream& os, const User& user) {
+	return os << user.toString();
 }

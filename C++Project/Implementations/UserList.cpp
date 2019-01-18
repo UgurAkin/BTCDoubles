@@ -18,3 +18,144 @@
  * THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
  * TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
+
+#include "UserList.h"
+#include <algorithm>
+#include <fstream>
+#include <string>
+
+struct ReadFileException : public std::exception
+{
+	string reason;
+
+	ReadFileException(string reason){
+		this->reason = reason;
+	}
+
+	const char *what() const throw()
+	{
+		return reason.c_str();
+	}
+};
+
+vector<std::string> UserList::split(char delim, const std::string &str)
+{
+	vector<string> tokens;
+	size_t prev = 0, pos = 0;
+	do
+	{
+		pos = str.find(delim, prev);
+		if (pos == string::npos)
+			pos = str.length();
+		string token = str.substr(prev, pos - prev);
+		if (!token.empty())
+			tokens.push_back(token);
+		prev = pos + 1;
+	} while (pos < str.length() && prev < str.length());
+	return tokens;
+}
+
+void UserList::orderByAscending(User::PROPERTIES orderProperty)
+{
+	bool (*comparisonFunction)(const User* , const User* );
+
+	switch (orderProperty)
+	{
+	default:
+	case User::PROPERTIES::FIRST:
+		comparisonFunction = [](const User* a, const User* b) {
+			return a->getFirstName() < b->getFirstName();
+		};
+		break;
+	case User::PROPERTIES::LAST:
+		comparisonFunction = [](const User* a, const User* b) {
+			return a->getLastName() < b->getLastName();
+		};
+		break;
+	case User::PROPERTIES::RANK:
+		comparisonFunction = [](const User* a, const User* b) {
+			return a->getRank() < b->getRank();
+		};
+		break;
+	}
+
+	std::sort(this->begin(), this->end(), comparisonFunction);
+}
+
+void UserList::orderByDescending(User::PROPERTIES orderProperty)
+{
+	bool (*comparisonFunction)(const User* , const User* );
+
+	switch (orderProperty)
+	{
+	default:
+	case User::PROPERTIES::FIRST:
+		comparisonFunction = [](const User* a, const User* b) {
+			return a->getFirstName() > b->getFirstName();
+		};
+		break;
+	case User::PROPERTIES::LAST:
+		comparisonFunction = [](const User* a, const User* b) {
+			return a->getLastName() > b->getLastName();
+		};
+		break;
+	case User::PROPERTIES::RANK:
+		comparisonFunction = [](const User* a, const User* b) {
+			return a->getRank() > b->getRank();
+		};
+		break;
+	}
+
+	std::sort(this->begin(), this->end(), comparisonFunction);
+}
+
+UserList* UserList::loadFromFile(const string &fileURI)
+{
+	ifstream ifs;
+	ifs.open(fileURI, std::fstream::in);
+	try
+	{
+		if (ifs.is_open())
+		{
+			UserList* result = new UserList();
+			string line = "";
+			int lineIndex = 0;
+			while (std::getline(ifs, line))
+			{
+				auto tokens = split(DELIM, line);
+				if (tokens.size() != User::AMT_PROPERTIES)
+				{
+					throw ReadFileException("Corrupted line in file, at line " + std::to_string(lineIndex));
+				}
+
+				auto rankIndex = static_cast<int>(User::PROPERTIES::RANK);
+				auto firstIndex = static_cast<int>(User::PROPERTIES::FIRST);
+				auto lastIndex = static_cast<int>(User::PROPERTIES::LAST);
+
+				unsigned int rank = std::stoi(tokens[rankIndex]);
+				string first = tokens[firstIndex];
+				string last = tokens[lastIndex];
+
+				//std::unique_ptr<User> newUser (new User(first, last, rank));
+				
+				User* newUser = new User(first, last, rank);
+				result->push_back(newUser);
+				lineIndex++;
+			}
+			ifs.close();
+			return result;
+		}
+		else{
+			throw ReadFileException("Failed to locate file, file URI: " + fileURI);
+		}
+		
+	}
+	catch (ReadFileException &e)
+	{
+		std::cout << e.what();
+	}
+	catch (exception &e)
+	{
+		std::cout << e.what();
+	}
+}

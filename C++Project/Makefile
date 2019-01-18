@@ -2,7 +2,7 @@
 
 # Compiler & Flags
 CC := g++
-CPPFLAGS :=
+CPPFLAGS := -std=c++11 -g
 
 # Folders
 ProjectPath := $(subst /Makefile,,$(abspath $(lastword $(MAKEFILE_LIST))))
