@@ -27,8 +27,15 @@
 #include <random>
 #include <algorithm>
 #include <fstream>
+#include <exception>
 
-std::vector<std::string> Helpers::split(char delim, const std::string &str)
+//TODO: Reorganize this file into multiple files defining each namespace
+//		separately.
+
+std::vector<std::string> 
+StringExtensions::split(
+	char delim,
+	const std::string &str )
 {
 	std::vector<std::string> tokens;
 	size_t prev = 0, pos = 0;
@@ -46,7 +53,9 @@ std::vector<std::string> Helpers::split(char delim, const std::string &str)
 }
 
 
-std::vector<std::string> Helpers::readLinesInFile(const std::string& fileURI)
+std::vector<std::string> 
+FileRW::readLinesInFile(
+	const std::string& fileURI )
 {
 	std::ifstream ifs;
 	ifs.open(fileURI, std::fstream::in);
@@ -75,8 +84,53 @@ std::vector<std::string> Helpers::readLinesInFile(const std::string& fileURI)
 	{
 		std::cout << e.what();
 	}
-	catch (exception &e)
+	catch (std::exception &e)
 	{
 		std::cout << e.what();
 	}
+	ifs.close();
+}
+
+bool FileRW::writeToFile(
+	const std::string& fileURI, 
+	const std::string& text )
+{
+	std::ofstream ofs;
+	ofs.open(fileURI, std::ofstream::out | std::ofstream::trunc);
+	try
+	{
+		if (ofs.is_open())
+		{			
+			ofs << text;
+			ofs.close();
+			return true;
+		}
+		else
+		{
+			throw ReadFileException("Failed to locate file, file URI: " + fileURI);
+		}
+		
+	}
+	catch (ReadFileException &e)
+	{
+		std::cout << e.what();
+	}
+	catch (std::exception &e)
+	{
+		std::cout << e.what();
+	}
+	
+	ofs.close();
+	return false;
+}
+
+bool FileRW::writeLinesToFile(
+	const std::string& fileURI,
+	const std::vector<std::string>& lines)
+{
+	std::string concatted = "";
+	for(auto line : lines){
+		concatted += line + "\n";
+	}
+	return FileRW::writeToFile(fileURI, concatted);
 }

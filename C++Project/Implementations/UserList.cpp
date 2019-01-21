@@ -89,52 +89,33 @@ bool UserList::save(
 
 UserList *UserList::loadFromFile(const string &fileURI)
 {
-	ifstream ifs;
-	ifs.open(fileURI, std::fstream::in);
-	try
-	{
-		if (ifs.is_open())
-		{
-			UserList* result = new UserList();
-			string line = "";
-			int lineIndex = 0;
-			while (std::getline(ifs, line))
-			{
-				auto tokens = Helpers::split(DELIM, line);
-				if (tokens.size() != User::AMT_PROPERTIES)
-				{
-					throw ReadFileException("Corrupted line in file, at line " + std::to_string(lineIndex));
-				}
-
-				auto rankIndex = static_cast<int>(User::PROPERTIES::RANK);
-				auto firstIndex = static_cast<int>(User::PROPERTIES::FIRST);
-				auto lastIndex = static_cast<int>(User::PROPERTIES::LAST);
-
-				unsigned int rank = std::stoi(tokens[rankIndex]);
-				string first = tokens[firstIndex];
-				string last = tokens[lastIndex];
-
-				//std::unique_ptr<User> newUser (new User(first, last, rank));
-				
-				User* newUser = new User(first, last, rank);
-				result->push_back(newUser);
-				lineIndex++;
-			}
-			ifs.close();
-			return result;
-		}
-		else
-		{
-			throw ReadFileException("Failed to locate file, file URI: " + fileURI);
-		}
+	auto fileContents = FileRW::readLinesInFile(fileURI);
+	if(fileContents.empty()){
+		return new UserList();
 	}
-	catch (ReadFileException &e)
+
+	UserList *result = new UserList();
+	string line = "";
+	for(int lineIndex = 0; lineIndex < fileContents.size(); lineIndex++)
 	{
-		std::cout << e.what();
-	}
-	catch (exception &e)
-	{
-		std::cout << e.what();
+		auto line = fileContents[lineIndex];
+		auto tokens = StringExtensions::split(DELIM, line);
+		if (tokens.size() != User::AMT_PROPERTIES)
+		{
+			throw ReadFileException("Corrupted line in file, at line " + std::to_string(lineIndex));
+		}
+
+		auto rankIndex = static_cast<int>(User::PROPERTIES::RANK);
+		auto firstIndex = static_cast<int>(User::PROPERTIES::FIRST);
+		auto lastIndex = static_cast<int>(User::PROPERTIES::LAST);
+
+		unsigned int rank = std::stoi(tokens[rankIndex]);
+		string first = tokens[firstIndex];
+		string last = tokens[lastIndex];
+
+		User *newUser = new User(first, last, rank);
+		result->push_back(newUser);
+		lineIndex++;
 	}
 }
 
@@ -143,44 +124,19 @@ bool UserList::writeToFile(
 	const UserList &users, 
 	const  UserList::WR_FORMAT format)
 {
-	ofstream ofs;
-	ofs.open(fileURI, ofstream::out | ofstream::trunc);
-	try
-	{
-		if (ofs.is_open())
-		{
-			string str = "";
-			
-			switch (format)
-			{
-				
-				case UserList::WR_FORMAT::PLAIN:
-					str = users.toString();
-					break;
-				default:
-				case UserList::WR_FORMAT::CSV:
-					str = users.toCSV();
-					break;
-			}
-			
-			ofs << str;
-			return true;
-		}
-		else
-		{
-			throw ReadFileException("Failed to locate file, file URI: " + fileURI);
-		}
-		
+
+	string str = "";
+	switch (format)
+	{	
+		case UserList::WR_FORMAT::PLAIN:
+			str = users.toString();
+			break;
+		default:
+		case UserList::WR_FORMAT::CSV:
+			str = users.toCSV();
+			break;
 	}
-	catch (ReadFileException &e)
-	{
-		std::cout << e.what();
-	}
-	catch (exception &e)
-	{
-		std::cout << e.what();
-	}
-	return false;
+	return FileRW::writeToFile(fileURI, str);	
 }
 
 std::string UserList::toString() const {

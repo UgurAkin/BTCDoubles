@@ -21,6 +21,7 @@
 
 #include "User.h"
 #include "UserList.h"
+#include "Helpers.h"
 #include <iostream>
 #include <fstream>
 
@@ -32,6 +33,6 @@ int main(){
         
 
 
-        randomTakeN()
+        randomTakeN();
     }
 }

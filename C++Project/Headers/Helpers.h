@@ -25,10 +25,24 @@
 #include <vector>
 #include <string>
 
-struct Helpers {
-    static std::vector<std::string> split(char, const std::string& );
-    static std::vector<std::string> readLinesInFile(const std::string& );
-};
+namespace StringExtensions
+{
+    std::vector<std::string> split(char, const std::string &);
+}
 
+namespace FileRW
+{
+    std::vector<std::string> readLinesInFile(const std::string &);
+    bool writeToFile(const std::string &, const std::string &);
+    bool writeLinesToFile(const std::string &, const std::vector<std::string> &);
+}
+
+namespace Linq
+{
+    template <typename T>
+    std::vector<T> take(const std::vector<T> &, int n);
+    template <typename T> 
+    std::vector<T> skip(const std::vector<T> &, int n);
+}
 
 #endif //__HELPERS_H_
