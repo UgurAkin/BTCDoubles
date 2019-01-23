@@ -25,14 +25,21 @@
 #include <iostream>
 #include <fstream>
 
-int main(){
+static const unsigned int DEFAULT_LIST_SIZE = 75;
+
+int main(int argc, char* argv[]){
+    
+    
     std::string filePath = "TextFiles/RandomNames.txt";
-    ifstream ifs;
-    ifs.open(filePath, fstream::in);
-    if(ifs.is_open()){
-        
-
-
-        randomTakeN();
+    auto allNames = FileRW::readLinesInFile(filePath);
+    int listSize = DEFAULT_LIST_SIZE;
+    if(argc >= 2){
+        try{
+            listSize = std::atoi(argv[2]);
+        }
+        catch(std::exception& e){
+            throw std::invalid_argument("Invalid argument, expected size of the user list!");
+        }
     }
+    randomNames = RandomExtensions::random_shuffle(allNames);
 }

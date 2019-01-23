@@ -40,9 +40,9 @@ namespace FileRW
 namespace Linq
 {
     template <typename T>
-    std::vector<T> take(const std::vector<T> &, int n);
+    std::vector<T> take(const std::vector<T> &, int);
     template <typename T> 
-    std::vector<T> skip(const std::vector<T> &, int n);
+    std::vector<T> skip(const std::vector<T> &, int);
 }
 
 #endif //__HELPERS_H_
