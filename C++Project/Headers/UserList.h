@@ -38,11 +38,7 @@ class UserList : public vector<User*>
 		CSV
 	};
 
-	~UserList(){
-		for(auto user : *this){
-			delete user;
-		}
-	}
+	~UserList();
 
 	void orderByAscending(User::PROPERTIES);
 	void orderByDescending(User::PROPERTIES );
@@ -55,7 +51,8 @@ class UserList : public vector<User*>
 	std::string toString() const;
 	std::string toCSV() const;
 	friend ostream& operator<< (ostream&, const UserList& );
-
+	
+	static UserList* make (const std::vector<std::string>& );
 };
 
 

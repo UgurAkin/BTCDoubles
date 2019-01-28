@@ -26,6 +26,13 @@
 #include <fstream>
 #include <string>
 
+UserList::~UserList(){
+	for(auto user : *this){
+		delete user;
+	}
+}
+
+
 void UserList::orderByAscending(User::PROPERTIES orderProperty)
 {
 	bool (*comparisonFunction)(const User* , const User* );

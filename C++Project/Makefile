@@ -28,33 +28,18 @@ Objects := $(addsuffix $(ObjExtension),$(addprefix $(ObjectPath)/,$(ObjectNames)
 Executables := $(addprefix $(BinPath)/,$(ExecutableNames))
 
 all: $(Executables)
-#	@echo $(Objects)
-#	@echo $(Executables)
-#	@echo $(Objs)
-# 	@echo $(MAKEFILE_LIST)
-# 	@echo $(ProjectPath)
-# # 	@echo $(HeaderFolder)
-# # 	@echo $(MainSourceFolder)
-# 	@echo $(ImplementationFolder)
-# #	@echo $(Headers)
-#	@echo $(Implementations)
-# #	@echo $(MainSource)
 
-# 	ls $(ImplementationFolder)
-
-
-$(ObjectPath)/%.o: $(ImplementationFolder)/%.cpp init_build_dir
+$(ObjectPath)/%.o: $(ImplementationFolder)/%.cpp
 	@$(CC) $(CPPFLAGS) -c -o $@ $<
 
 $(BinPath)/%: $(MainSourceFolder)/%.cpp $(Objects)
 	@$(CC) $(CPPFLAGS) -o $@ $^
 
-
 init_build_dir:
 	@mkdir --parents $(ObjectPath)
 	@mkdir --parents $(BinPath)
 
-.PHONY: clean
+.PHONY: all clean init_build_dir
 
-clean: 
+clean:
 	@rm -f $(ObjectPath)/*.o $(Executables)

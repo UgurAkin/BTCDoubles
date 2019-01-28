@@ -45,4 +45,19 @@ namespace Linq
     std::vector<T> skip(const std::vector<T> &, int);
 }
 
+namespace RandomExtensions {
+    template <typename T>
+    std::vector<T> random_shuffle(const std::vector<T>& collection){
+        auto result(collection);
+        auto len = result.size();
+        for(int i = 0; i < len; i++)
+        {
+            int rnd = rand() % len;
+            std::swap(result[i], result[rnd]);
+        }
+        
+        return result;
+    }
+}
+
 #endif //__HELPERS_H_

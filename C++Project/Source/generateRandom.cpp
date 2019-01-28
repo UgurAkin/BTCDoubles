@@ -23,14 +23,15 @@
 #include "UserList.h"
 #include "Helpers.h"
 #include <iostream>
+#include <string>
 #include <fstream>
-
+#include <vector>
 static const unsigned int DEFAULT_LIST_SIZE = 75;
 
 int main(int argc, char* argv[]){
     
     
-    std::string filePath = "TextFiles/RandomNames.txt";
+    std::string filePath = "../../TextFiles/RandomNames.txt";
     auto allNames = FileRW::readLinesInFile(filePath);
     int listSize = DEFAULT_LIST_SIZE;
     if(argc >= 2){
@@ -41,5 +42,6 @@ int main(int argc, char* argv[]){
             throw std::invalid_argument("Invalid argument, expected size of the user list!");
         }
     }
-    randomNames = RandomExtensions::random_shuffle(allNames);
+    std::vector<std::string> randomNames = RandomExtensions::random_shuffle <std::string> (allNames);
+    
 }
