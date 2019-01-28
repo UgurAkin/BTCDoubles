@@ -38,7 +38,7 @@ int main(int argc, char* argv[]){
     int listSize = DEFAULT_LIST_SIZE;
     if(argc >= 2){
         try{
-            listSize = std::atoi(argv[2]);
+            listSize = std::atoi(argv[1]);
         }
         catch(std::exception& e){
             throw std::invalid_argument("Invalid argument, expected size of the user list!");
@@ -46,7 +46,7 @@ int main(int argc, char* argv[]){
     }
     
     std::vector<std::string> randomNames = RandomExtensions::random_shuffle <std::string> (allNames);
-    randomNames.erase(randomNames.begin() + DEFAULT_LIST_SIZE, randomNames.end());
+    randomNames.erase(randomNames.begin() + listSize, randomNames.end());
     UserList* ul = UserList::make(randomNames);
     ul->orderByAscending(User::PROPERTIES::RANK);
     ul->save(ulFilePath);

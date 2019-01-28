@@ -49,6 +49,8 @@ namespace Linq
 namespace RandomExtensions {
     template <typename T>
     std::vector<T> random_shuffle(const std::vector<T>& collection){
+        srand(time(0));
+
         auto result(collection);
         auto len = result.size();
         for(int i = 0; i < len; i++)
