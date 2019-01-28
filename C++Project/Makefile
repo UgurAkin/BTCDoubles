@@ -41,5 +41,7 @@ init_build_dir:
 
 .PHONY: all clean init_build_dir
 
+.SECONDARY: $(Objects)
+
 clean:
 	@rm -f $(ObjectPath)/*.o $(Executables)

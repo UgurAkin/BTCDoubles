@@ -146,6 +146,7 @@ bool UserList::writeToFile(
 	return FileRW::writeToFile(fileURI, str);	
 }
 
+
 std::string UserList::toString() const {
 	std::string result = "";
 	for(User* user : *this){
