@@ -32,6 +32,7 @@ namespace StringExtensions
 
 namespace FileRW
 {
+    std::string getBasePath(const std::string& );
     std::vector<std::string> readLinesInFile(const std::string &);
     bool writeToFile(const std::string &, const std::string &);
     bool writeLinesToFile(const std::string &, const std::vector<std::string> &);

@@ -97,12 +97,12 @@ bool UserList::save(
 UserList *UserList::loadFromFile(const string &fileURI)
 {
 	auto fileContents = FileRW::readLinesInFile(fileURI);
+	
 	if(fileContents.empty()){
 		return new UserList();
 	}
 
 	UserList *result = new UserList();
-	string line = "";
 	for(int lineIndex = 0; lineIndex < fileContents.size(); lineIndex++)
 	{
 		auto line = fileContents[lineIndex];
@@ -122,8 +122,8 @@ UserList *UserList::loadFromFile(const string &fileURI)
 
 		User *newUser = new User(first, last, rank);
 		result->push_back(newUser);
-		lineIndex++;
 	}
+	return result;
 }
 
 bool UserList::writeToFile(
@@ -164,4 +164,19 @@ std::string UserList::toCSV() const {
 
 ostream& operator<< (ostream& os, const UserList& users){
 	return os << users.toString();
+}
+
+UserList* UserList::make(const std::vector<std::string> &names){
+	UserList* result = new UserList();
+	for(size_t i = 0; i < names.size(); i++)
+	{
+		auto fullName = StringExtensions::split(' ', names[i]);
+		auto firstName = fullName[0];
+		auto lastName = fullName[1];
+		auto rank = i+1;
+		User* user = new User(firstName, lastName, rank);
+		result->push_back(user);
+	}
+	
+	return result;
 }

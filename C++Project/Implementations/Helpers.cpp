@@ -31,106 +31,114 @@
 
 //TODO: Reorganize this file into multiple files defining each namespace
 //		separately.
-
-std::vector<std::string> 
-StringExtensions::split(
-	char delim,
-	const std::string &str )
-{
-	std::vector<std::string> tokens;
-	size_t prev = 0, pos = 0;
-	do
+namespace StringExtensions {
+	std::vector<std::string> 
+	split(
+		char delim,
+		const std::string &str )
 	{
-		pos = str.find(delim, prev);
-		if (pos == std::string::npos)
-			pos = str.length();
-		std::string token = str.substr(prev, pos - prev);
-		if (!token.empty())
-			tokens.push_back(token);
-		prev = pos + 1;
-	} while (pos < str.length() && prev < str.length());
-	return tokens;
+		std::vector<std::string> tokens;
+		size_t prev = 0, pos = 0;
+		do
+		{
+			pos = str.find(delim, prev);
+			if (pos == std::string::npos)
+				pos = str.length();
+			std::string token = str.substr(prev, pos - prev);
+			if (!token.empty())
+				tokens.push_back(token);
+			prev = pos + 1;
+		} while (pos < str.length() && prev < str.length());
+		return tokens;
+	}
 }
 
+namespace FileRW {
+	std::string getBasePath(const std::string& arg0){
+    	auto result = arg0.substr(0, arg0.find_last_of("/"));
+		return result;
+	}
 
-std::vector<std::string> 
-FileRW::readLinesInFile(
-	const std::string& fileURI )
-{
-	std::ifstream ifs;
-	ifs.open(fileURI, std::fstream::in);
-	try
+	std::vector<std::string> 
+	readLinesInFile(
+		const std::string& fileURI )
 	{
-		if (ifs.is_open())
+		std::ifstream ifs;
+		ifs.open(fileURI, std::fstream::in);
+		try
 		{
-			std::vector<std::string> result = std::vector<std::string>();
-			std::string line = "";
-			int lineIndex = 0;
-			while (std::getline(ifs, line))
+			if (ifs.is_open())
 			{
+				std::vector<std::string> result = std::vector<std::string>();
+				std::string line = "";
+				int lineIndex = 0;
+				while (std::getline(ifs, line))
+				{
 
-				result.push_back(line);
-				lineIndex++;
+					result.push_back(line);
+					lineIndex++;
+				}
+				ifs.close();
+				return result;
 			}
-			ifs.close();
-			return result;
+			else
+			{
+				throw ReadFileException("Failed to locate file, file URI: " + fileURI);
+			}
 		}
-		else
+		catch (ReadFileException &e)
 		{
-			throw ReadFileException("Failed to locate file, file URI: " + fileURI);
+			std::cout << e.what();
 		}
+		catch (std::exception &e)
+		{
+			std::cout << e.what();
+		}
+		ifs.close();
 	}
-	catch (ReadFileException &e)
-	{
-		std::cout << e.what();
-	}
-	catch (std::exception &e)
-	{
-		std::cout << e.what();
-	}
-	ifs.close();
-}
 
-bool FileRW::writeToFile(
-	const std::string& fileURI, 
-	const std::string& text )
-{
-	std::ofstream ofs;
-	ofs.open(fileURI, std::ofstream::out | std::ofstream::trunc);
-	try
+	bool writeToFile(
+		const std::string& fileURI, 
+		const std::string& text )
 	{
-		if (ofs.is_open())
-		{			
-			ofs << text;
-			ofs.close();
-			return true;
-		}
-		else
+		std::ofstream ofs;
+		ofs.open(fileURI, std::ofstream::out | std::ofstream::trunc);
+		try
 		{
-			throw ReadFileException("Failed to locate file, file URI: " + fileURI);
+			if (ofs.is_open())
+			{			
+				ofs << text;
+				ofs.close();
+				return true;
+			}
+			else
+			{
+				throw ReadFileException("Failed to locate file, file URI: " + fileURI);
+			}
+			
+		}
+		catch (ReadFileException &e)
+		{
+			std::cout << e.what();
+		}
+		catch (std::exception &e)
+		{
+			std::cout << e.what();
 		}
 		
+		ofs.close();
+		return false;
 	}
-	catch (ReadFileException &e)
-	{
-		std::cout << e.what();
-	}
-	catch (std::exception &e)
-	{
-		std::cout << e.what();
-	}
-	
-	ofs.close();
-	return false;
-}
 
-bool FileRW::writeLinesToFile(
-	const std::string& fileURI,
-	const std::vector<std::string>& lines)
-{
-	std::string concatted = "";
-	for(auto line : lines){
-		concatted += line + "\n";
+	bool writeLinesToFile(
+		const std::string& fileURI,
+		const std::vector<std::string>& lines)
+	{
+		std::string concatted = "";
+		for(auto line : lines){
+			concatted += line + "\n";
+		}
+		return FileRW::writeToFile(fileURI, concatted);
 	}
-	return FileRW::writeToFile(fileURI, concatted);
+
 }

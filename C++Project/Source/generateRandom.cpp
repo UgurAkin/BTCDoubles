@@ -30,8 +30,10 @@ static const unsigned int DEFAULT_LIST_SIZE = 75;
 
 int main(int argc, char* argv[]){
     
-    
-    std::string filePath = "../../TextFiles/RandomNames.txt";
+    std::string arg0(argv[0]);
+    std::string base = FileRW::getBasePath(arg0);
+    std::string filePath = base + "/../../TextFiles/RandomNames.txt";
+    std::string ulFilePath = base +  "/../../TextFiles/rndUsers.csv";
     auto allNames = FileRW::readLinesInFile(filePath);
     int listSize = DEFAULT_LIST_SIZE;
     if(argc >= 2){
@@ -42,6 +44,11 @@ int main(int argc, char* argv[]){
             throw std::invalid_argument("Invalid argument, expected size of the user list!");
         }
     }
-    std::vector<std::string> randomNames = RandomExtensions::random_shuffle <std::string> (allNames);
     
+    std::vector<std::string> randomNames = RandomExtensions::random_shuffle <std::string> (allNames);
+    randomNames.erase(randomNames.begin() + DEFAULT_LIST_SIZE, randomNames.end());
+    UserList* ul = UserList::make(randomNames);
+    ul->orderByAscending(User::PROPERTIES::RANK);
+    ul->save(ulFilePath);
+
 }

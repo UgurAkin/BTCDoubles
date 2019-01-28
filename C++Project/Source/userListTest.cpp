@@ -13,14 +13,16 @@
 #include <iostream>
 #include <string>
 #include <fstream>
+#include "Helpers.h"
 #include "UserList.h"
 #include "User.h"
 
 
-
 int main(int argc, char const *argv[])
 {	
-	auto filePath = "TextFiles/Users.csv";
+	std::string arg0(argv[0]);
+	auto base = FileRW::getBasePath(arg0);
+	auto filePath = base + "/../../TextFiles/Users.csv";
 
 	auto users = UserList::loadFromFile(filePath);
 

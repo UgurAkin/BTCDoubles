@@ -1,3 +1,9 @@
+<<<<<<< HEAD
 1,Glenn,Richards
 2,Eugene,Joy
 3,Ugur,Akin
+=======
+3,Ugur,Akin
+2,Eugene,Joy
+1,Glenn,Richards
+>>>>>>> Bugs in UserList fixed. Generate random userlist implemented.
