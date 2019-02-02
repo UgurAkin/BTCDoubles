@@ -41,14 +41,36 @@ namespace FileRW
 namespace Linq
 {
     template <typename T>
-    std::vector<T> take(const std::vector<T> &, int);
+    std::vector<T> take(const std::vector<T> & container, int amt){
+        if(amt > container.size()){
+            return container;
+        }
+
+        auto result = container;
+        result.erase(result.begin() + amt, result.end());
+        return result;
+    }
+
     template <typename T> 
-    std::vector<T> skip(const std::vector<T> &, int);
+    std::vector<T> skip(const std::vector<T> & container, int by){
+        if(by == 0){
+            return container;
+        }
+        
+        std::vector<T> result;
+        if(by > container.size()){
+            return result;
+        }
+
+        result = container;
+        result.erase(result.begin(), result.begin()+by);
+        return result;
+    }
 }
 
 namespace RandomExtensions {
     template <typename T>
-    std::vector<T> random_shuffle(const std::vector<T>& collection){
+    std::vector<T> randomShuffle(const std::vector<T>& collection){
         srand(time(0));
 
         auto result(collection);
@@ -61,6 +83,8 @@ namespace RandomExtensions {
         
         return result;
     }
+
+    int randomInt(int min, int max);
 }
 
 #endif //__HELPERS_H_

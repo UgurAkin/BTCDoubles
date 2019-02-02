@@ -44,15 +44,16 @@ class UserList : public vector<User*>
 	void orderByDescending(User::PROPERTIES );
 	bool save(const string&, const WR_FORMAT format = WR_FORMAT::CSV);
 
-	static UserList* loadFromFile(const std::string& );
+	static std::unique_ptr<UserList> loadFromFile(const std::string& );
 	static bool writeToFile(const std::string&, const UserList&, const WR_FORMAT format = WR_FORMAT::CSV);
 	
-	//TODO: Add ostream& operator<< and toString (with proper formatting)
 	std::string toString() const;
 	std::string toCSV() const;
 	friend ostream& operator<< (ostream&, const UserList& );
 	
-	static UserList* make (const std::vector<std::string>& );
+
+	//TODO: hide constructors to avoid raw pointers (?).
+	static std::unique_ptr<UserList> make (const std::vector<std::string>& );
 };
 
 

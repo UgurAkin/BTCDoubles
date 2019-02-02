@@ -26,29 +26,40 @@
 #include <string>
 #include <fstream>
 #include <vector>
-static const unsigned int DEFAULT_LIST_SIZE = 75;
+
+static const int SIM_MIN_AMT_USERS = 32;
+static const int SIM_MAX_AMT_USERS = 50;
+
+//WARNING: Decent spaghetthi ahead !
 
 int main(int argc, char* argv[]){
     
     std::string arg0(argv[0]);
     std::string base = FileRW::getBasePath(arg0);
-    std::string filePath = base + "/../../TextFiles/RandomNames.txt";
-    std::string ulFilePath = base +  "/../../TextFiles/rndUsers.csv";
-    auto allNames = FileRW::readLinesInFile(filePath);
-    int listSize = DEFAULT_LIST_SIZE;
-    if(argc >= 2){
-        try{
-            listSize = std::atoi(argv[1]);
-        }
-        catch(std::exception& e){
-            throw std::invalid_argument("Invalid argument, expected size of the user list!");
-        }
+    std::string usersFileURI = base +  "/../../TextFiles/rndUsers.csv";
+
+    auto allUsers = FileRW::readLinesInFile(usersFileURI);
+    int amtUsers = RandomExtensions::randomInt(SIM_MIN_AMT_USERS, SIM_MAX_AMT_USERS);
+
+    auto signedUpUsers = RandomExtensions::randomShuffle(allUsers);
+    Linq::take(signedUpUsers, amtUsers);
+
+    auto competitors = UserList::make(signedUpUsers);
+    competitors->orderByAscending(User::PROPERTIES::RANK);
+
+    int amtCourts = amtUsers / 4;
+    int amtSpares = amtUsers % 4;
+    std::vector<UserList> courts(amtCourts);
+    for(int court = 0; court < amtCourts; court++){
+        auto competitorsCopy = *competitors;
+        int skipBy = court * 4;
+        int take = 4;
+        Linq::skip(competitorsCopy, skipBy);
+        Linq::take(competitorsCopy, take);
+
+        courts.push_back(competitorsCopy);
     }
-    
-    std::vector<std::string> randomNames = RandomExtensions::randomShuffle <std::string> (allNames);
-    randomNames.erase(randomNames.begin() + listSize, randomNames.end());
-    UserList* ul = UserList::make(randomNames);
-    ul->orderByAscending(User::PROPERTIES::RANK);
-    ul->save(ulFilePath);
+    //format printed court info to a file
+
 
 }

@@ -142,3 +142,20 @@ namespace FileRW {
 	}
 
 }
+
+namespace RandomExtensions {
+	int randomInt(int lBoundInclusive, int uBoundInclusive){
+		if(uBoundInclusive < lBoundInclusive) {
+			throw std::invalid_argument("Invalid upper bound and lower bound values");
+		}
+		else if( uBoundInclusive == lBoundInclusive){
+			return uBoundInclusive;
+		}
+		else{
+			srand(time(0));
+			int gap = uBoundInclusive - lBoundInclusive + 1;   //for input [0,1] need % 2;
+			int result = rand() % gap + lBoundInclusive;
+			return result;
+		}
+	}
+}

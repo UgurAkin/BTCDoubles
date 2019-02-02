@@ -94,15 +94,15 @@ bool UserList::save(
 	return UserList::writeToFile(fileURI, *this, format);
 }
 
-UserList *UserList::loadFromFile(const string &fileURI)
+std::unique_ptr<UserList> UserList::loadFromFile(const string &fileURI)
 {
 	auto fileContents = FileRW::readLinesInFile(fileURI);
 	
 	if(fileContents.empty()){
-		return new UserList();
+		return std::make_unique<UserList>(new UserList());
 	}
 
-	UserList *result = new UserList();
+	auto result = std::make_unique<UserList>(new UserList());
 	for(int lineIndex = 0; lineIndex < fileContents.size(); lineIndex++)
 	{
 		auto line = fileContents[lineIndex];
@@ -167,8 +167,8 @@ ostream& operator<< (ostream& os, const UserList& users){
 	return os << users.toString();
 }
 
-UserList* UserList::make(const std::vector<std::string> &names){
-	UserList* result = new UserList();
+std::unique_ptr<UserList> UserList::make(const std::vector<std::string> &names){
+	auto result = std::make_unique<UserList>(new UserList());
 	for(size_t i = 0; i < names.size(); i++)
 	{
 		auto fullName = StringExtensions::split(' ', names[i]);

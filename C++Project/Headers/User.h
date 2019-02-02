@@ -58,6 +58,8 @@ class User
 	string toString() const;
 	string toCSV() const;
 	friend ostream &operator<<(ostream&, const User&);
+
+	//TODO: implement make and privatize constructors to avoid raw pointers.
 };
 
 #endif //__CLUB_USER
