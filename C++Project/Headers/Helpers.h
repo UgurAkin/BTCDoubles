@@ -23,6 +23,7 @@
 #define __HELPERS_H_
 
 #include <vector>
+#include <iostream>
 #include <string>
 
 namespace StringExtensions
@@ -46,7 +47,7 @@ namespace Linq
             return container;
         }
 
-        auto result = container;
+        std::vector<T> result = container;
         result.erase(result.begin() + amt, result.end());
         return result;
     }

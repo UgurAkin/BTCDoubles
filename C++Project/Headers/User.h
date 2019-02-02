@@ -23,6 +23,7 @@
 #define __CLUB_USER
 
 #include <iostream>
+#include <memory>
 using namespace std;
 
 class User

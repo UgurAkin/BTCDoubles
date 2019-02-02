@@ -47,7 +47,7 @@ int main(int argc, char* argv[]){
     
     std::vector<std::string> randomNames = RandomExtensions::randomShuffle <std::string> (allNames);
     randomNames.erase(randomNames.begin() + listSize, randomNames.end());
-    UserList* ul = UserList::make(randomNames);
+    auto ul = UserList::make(randomNames);
     ul->orderByAscending(User::PROPERTIES::RANK);
     ul->save(ulFilePath);
 

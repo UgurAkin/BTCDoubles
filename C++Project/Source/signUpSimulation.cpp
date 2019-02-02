@@ -26,6 +26,7 @@
 #include <string>
 #include <fstream>
 #include <vector>
+#include <memory>
 
 static const int SIM_MIN_AMT_USERS = 32;
 static const int SIM_MAX_AMT_USERS = 50;
@@ -38,28 +39,52 @@ int main(int argc, char* argv[]){
     std::string base = FileRW::getBasePath(arg0);
     std::string usersFileURI = base +  "/../../TextFiles/rndUsers.csv";
 
-    auto allUsers = FileRW::readLinesInFile(usersFileURI);
+    auto allUsers = UserList::loadFromFile(usersFileURI);
     int amtUsers = RandomExtensions::randomInt(SIM_MIN_AMT_USERS, SIM_MAX_AMT_USERS);
 
-    auto signedUpUsers = RandomExtensions::randomShuffle(allUsers);
-    Linq::take(signedUpUsers, amtUsers);
+    std::unique_ptr<UserList> competitors = std::make_unique<UserList> (RandomExtensions::randomShuffle(*allUsers));
+    *competitors = Linq::take(*competitors, amtUsers);
 
-    auto competitors = UserList::make(signedUpUsers);
     competitors->orderByAscending(User::PROPERTIES::RANK);
 
     int amtCourts = amtUsers / 4;
     int amtSpares = amtUsers % 4;
-    std::vector<UserList> courts(amtCourts);
+    std::vector<UserList*> courtsPlayers(amtCourts);
     for(int court = 0; court < amtCourts; court++){
-        auto competitorsCopy = *competitors;
+        auto competitorsCopy = std::make_unique<UserList>(*competitors);
         int skipBy = court * 4;
         int take = 4;
-        Linq::skip(competitorsCopy, skipBy);
-        Linq::take(competitorsCopy, take);
+        *competitorsCopy = Linq::skip(*competitorsCopy, skipBy);
+        *competitorsCopy = Linq::take(*competitorsCopy, take);
 
-        courts.push_back(competitorsCopy);
+        courtsPlayers[court] = new UserList(*competitorsCopy);
     }
-    //format printed court info to a file
 
+    int amtCourtsA = amtCourts / 2;
 
+    std::string courtAStr = "Group A 8:00-10:00 PM\n\n";
+    for(int court = 0; court < amtCourtsA; court++){
+        courtAStr += "Court " + to_string(court + 1) + "\n\n";
+        courtAStr += courtsPlayers[court]->toString() + "\n";
+    }
+    courtAStr += "\n\n";
+
+    std::string courtBStr = "Group B 6:00-8:00 PM\n\n";
+    for(int court = amtCourtsA; court < amtCourts; court++){
+        courtBStr += "Court " + to_string(court + 1) + "\n\n";
+        courtBStr += courtsPlayers[court]->toString() + "\n";
+    }
+    courtBStr += "\n\n";
+
+    int spareOffset = amtUsers - amtSpares;
+    std::string sparesStr = "Spares\n\n";
+    for(int spare = 0; spare < amtSpares; spare++){
+        sparesStr += to_string(spare + 1) + ". " + (*competitors)[spareOffset + spare]->toString();
+    }
+    
+    
+
+    auto fileContentsToWrite = courtAStr + courtBStr + sparesStr;
+    std::string outputFileURI = base + "/../../TextFiles/doubles_fixture_0.txt";
+    FileRW::writeToFile(outputFileURI, fileContentsToWrite);
 }

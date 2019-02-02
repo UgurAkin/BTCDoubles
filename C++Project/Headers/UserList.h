@@ -29,6 +29,7 @@
 
 class UserList : public vector<User*>
 {	
+	typedef vector<User*> base;
 	static const char DELIM = ',';
 		
 	public:
@@ -38,7 +39,8 @@ class UserList : public vector<User*>
 		CSV
 	};
 
-	~UserList();
+	UserList();
+	UserList(const std::vector<User*> &);
 
 	void orderByAscending(User::PROPERTIES);
 	void orderByDescending(User::PROPERTIES );

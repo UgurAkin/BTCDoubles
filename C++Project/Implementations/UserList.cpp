@@ -26,11 +26,10 @@
 #include <fstream>
 #include <string>
 
-UserList::~UserList(){
-	for(auto user : *this){
-		delete user;
-	}
-}
+
+UserList::UserList() : base() {};
+
+UserList::UserList(const std::vector<User*> &vec) : base(vec) {};
 
 
 void UserList::orderByAscending(User::PROPERTIES orderProperty)
@@ -99,10 +98,10 @@ std::unique_ptr<UserList> UserList::loadFromFile(const string &fileURI)
 	auto fileContents = FileRW::readLinesInFile(fileURI);
 	
 	if(fileContents.empty()){
-		return std::make_unique<UserList>(new UserList());
+		return std::make_unique<UserList>();
 	}
 
-	auto result = std::make_unique<UserList>(new UserList());
+	auto result = std::make_unique<UserList>();
 	for(int lineIndex = 0; lineIndex < fileContents.size(); lineIndex++)
 	{
 		auto line = fileContents[lineIndex];
@@ -146,7 +145,6 @@ bool UserList::writeToFile(
 	return FileRW::writeToFile(fileURI, str);	
 }
 
-
 std::string UserList::toString() const {
 	std::string result = "";
 	for(User* user : *this){
@@ -168,7 +166,7 @@ ostream& operator<< (ostream& os, const UserList& users){
 }
 
 std::unique_ptr<UserList> UserList::make(const std::vector<std::string> &names){
-	auto result = std::make_unique<UserList>(new UserList());
+	auto result = std::make_unique<UserList>();
 	for(size_t i = 0; i < names.size(); i++)
 	{
 		auto fullName = StringExtensions::split(' ', names[i]);
