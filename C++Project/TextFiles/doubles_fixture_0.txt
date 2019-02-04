@@ -2,72 +2,78 @@ Group A 8:00-10:00 PM
 
 Court 1
 
-2, Eugene Avina
-3, Nigel Sabia
 4, Ross Hogge
-6, Colin Tennant
+5, Julieann Herring
+8, Marcellus Torres
+10, Rosaura Woodrow
 
 Court 2
 
-9, Bradly Subia
-10, Rosaura Woodrow
+11, Halina Oliverio
+12, Theo Redd
 13, Josh Holm
-16, Isiah Decicco
+14, Barrett Licari
 
 Court 3
 
-17, Song Cartwright
-21, Cyril Huntzinger
-25, Shantel Korn
-26, Mallie Cumbee
+16, Isiah Decicco
+18, Samual Weisinger
+19, Stewart Riggan
+20, Ned Swasey
 
 Court 4
 
+22, Fred Gales
+23, Juan Scheiber
+26, Mallie Cumbee
 27, Garland Rexrode
-29, Ruthann Schug
-33, Sammie Braithwaite
-34, Barrett Pohlmann
 
+Court 5
+
+28, Hattie Cassese
+29, Ruthann Schug
+31, Irving Meagher
+32, Clement Magnani
 
 
 Group B 6:00-8:00 PM
 
-Court 5
-
-35, Chad Vanallen
-40, Cedrick Litt
-42, Enoch Hottinger
-44, Dominick Cannella
-
 Court 6
 
-49, Bryce Poff
-50, Wallace Byas
-51, Dudley Cardella
-52, Dwain Schwebach
+33, Sammie Braithwaite
+35, Chad Vanallen
+37, Arnita Blea
+38, Dave Pence
 
 Court 7
 
-55, Virgil Terwilliger
-58, Frankie Korando
-59, Omer Fournier
-62, Kyong Antonio
+39, Zachery Cabe
+42, Enoch Hottinger
+43, Faustino Seabaugh
+45, Boris Bartholow
 
 Court 8
 
-65, Lazaro Pereyra
-67, Truman Ballance
-68, Dane Cotner
-69, Lorenzo Como
+49, Bryce Poff
+51, Dudley Cardella
+52, Dwain Schwebach
+53, Stevie Nosal
 
 Court 9
 
-70, Naida Antoine
+61, Jorge Hatton
+63, Mui Sawin
+64, Stephan Trojacek
+65, Lazaro Pereyra
+
+Court 10
+
+66, Christian Langlinais
+67, Truman Ballance
 71, Felton Armstong
 72, Phoebe Frost
-73, Seth Reading
-
 
 
 Spares
 
+1. 73, Seth Reading2. 75, Ilse Grenier

@@ -33,7 +33,6 @@ namespace StringExtensions
 
 namespace FileRW
 {
-    std::string getBasePath(const std::string& );
     std::vector<std::string> readLinesInFile(const std::string &);
     bool writeToFile(const std::string &, const std::string &);
     bool writeLinesToFile(const std::string &, const std::vector<std::string> &);
@@ -67,6 +66,17 @@ namespace Linq
         result.erase(result.begin(), result.begin()+by);
         return result;
     }
+}
+
+namespace Path {
+    static const std::vector<std::string> FILE_NAMES;
+
+    enum FOLDER {
+        TEXTFILES = 0
+    };
+
+    std::string getBasePath(const std::string& );
+    std::string getPathToFolder(const FOLDER&);
 }
 
 namespace RandomExtensions {

@@ -67,14 +67,14 @@ int main(int argc, char* argv[]){
         courtAStr += "Court " + to_string(court + 1) + "\n\n";
         courtAStr += courtsPlayers[court]->toString() + "\n";
     }
-    courtAStr += "\n\n";
+    courtAStr += "\n";
 
     std::string courtBStr = "Group B 6:00-8:00 PM\n\n";
     for(int court = amtCourtsA; court < amtCourts; court++){
         courtBStr += "Court " + to_string(court + 1) + "\n\n";
         courtBStr += courtsPlayers[court]->toString() + "\n";
     }
-    courtBStr += "\n\n";
+    courtBStr += "\n";
 
     int spareOffset = amtUsers - amtSpares;
     std::string sparesStr = "Spares\n\n";

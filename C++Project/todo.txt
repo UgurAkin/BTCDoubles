@@ -1,0 +1,9 @@
+1. Namespace to reliably use paths.
+2. Migration to unique + shared pointers.
+3. Clean up of source (mains) files.
+3.5. Clean up namespaces into files. (?) 
+4. Scripts to automate simulation process.
+
+5. Implement robust testing system. 
+   Unit tests and automation scripts.
+
