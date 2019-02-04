@@ -31,10 +31,13 @@ static const unsigned int DEFAULT_LIST_SIZE = 75;
 int main(int argc, char* argv[]){
     
     std::string arg0(argv[0]);
-    std::string base = FileRW::getBasePath(arg0);
-    std::string filePath = base + "/../../TextFiles/RandomNames.txt";
-    std::string ulFilePath = base +  "/../../TextFiles/rndUsers.csv";
-    auto allNames = FileRW::readLinesInFile(filePath);
+    Path::setBasePath(arg0);
+    std::string inputFileName = "RandomNames.txt";
+    std::string outputFileName = "rndUsers.csv";
+    std::string inputFileURI = Path::makePathToFile(Path::FOLDER::TEXTFILES, inputFileName);
+    std::string outputFileURI = Path::makePathToFile(Path::FOLDER::CSVFILES, outputFileName);
+
+    auto allNames = FileRW::readLinesInFile(inputFileURI);
     int listSize = DEFAULT_LIST_SIZE;
     if(argc >= 2){
         try{
@@ -49,6 +52,6 @@ int main(int argc, char* argv[]){
     randomNames.erase(randomNames.begin() + listSize, randomNames.end());
     auto ul = UserList::make(randomNames);
     ul->orderByAscending(User::PROPERTIES::RANK);
-    ul->save(ulFilePath);
+    ul->save(outputFileURI);
 
 }

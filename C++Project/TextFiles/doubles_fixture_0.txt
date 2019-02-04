@@ -2,78 +2,85 @@ Group A 8:00-10:00 PM
 
 Court 1
 
+1, George Lou
 4, Ross Hogge
-5, Julieann Herring
+7, Forrest Gratz
 8, Marcellus Torres
-10, Rosaura Woodrow
 
 Court 2
 
-11, Halina Oliverio
+9, Bradly Subia
 12, Theo Redd
 13, Josh Holm
-14, Barrett Licari
+17, Song Cartwright
 
 Court 3
 
-16, Isiah Decicco
 18, Samual Weisinger
 19, Stewart Riggan
-20, Ned Swasey
+21, Cyril Huntzinger
+22, Fred Gales
 
 Court 4
 
-22, Fred Gales
-23, Juan Scheiber
+24, Mariano Bester
+25, Shantel Korn
 26, Mallie Cumbee
-27, Garland Rexrode
+29, Ruthann Schug
 
 Court 5
 
-28, Hattie Cassese
-29, Ruthann Schug
 31, Irving Meagher
 32, Clement Magnani
+36, Normand Lintz
+38, Dave Pence
 
 
 Group B 6:00-8:00 PM
 
 Court 6
 
-33, Sammie Braithwaite
-35, Chad Vanallen
-37, Arnita Blea
-38, Dave Pence
+39, Zachery Cabe
+40, Cedrick Litt
+41, Calista Kontos
+42, Enoch Hottinger
 
 Court 7
 
-39, Zachery Cabe
-42, Enoch Hottinger
-43, Faustino Seabaugh
+44, Dominick Cannella
 45, Boris Bartholow
+46, Ambrose Mapp
+47, Colby Vannest
 
 Court 8
 
 49, Bryce Poff
-51, Dudley Cardella
+50, Wallace Byas
 52, Dwain Schwebach
 53, Stevie Nosal
 
 Court 9
 
+55, Virgil Terwilliger
+56, Rex Medal
+60, Chadwick Mazzotta
 61, Jorge Hatton
-63, Mui Sawin
-64, Stephan Trojacek
-65, Lazaro Pereyra
 
 Court 10
 
+62, Kyong Antonio
+63, Mui Sawin
+64, Stephan Trojacek
 66, Christian Langlinais
-67, Truman Ballance
-71, Felton Armstong
+
+Court 11
+
+68, Dane Cotner
+69, Lorenzo Como
+70, Naida Antoine
 72, Phoebe Frost
 
 
 Spares
 
-1. 73, Seth Reading2. 75, Ilse Grenier
+1. 75, Ilse Grenier

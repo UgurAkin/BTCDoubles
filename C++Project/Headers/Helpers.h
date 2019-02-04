@@ -69,14 +69,27 @@ namespace Linq
 }
 
 namespace Path {
-    static const std::vector<std::string> FILE_NAMES;
+    extern 
+    std::string EXECUTION_BASE_PATH;
 
-    enum FOLDER {
-        TEXTFILES = 0
+    extern 
+    const 
+    std::vector<std::string> RELATIVE_PATH_TO_FOLDER;
+
+    enum 
+    FOLDER {
+        TEXTFILES = 0,
+        CSVFILES = 1
     };
 
-    std::string getBasePath(const std::string& );
-    std::string getPathToFolder(const FOLDER&);
+    //NOTE: Usage of this namespace relies on each execution unit
+    //      calling setBasePath before doing anything else.
+
+    void setBasePath(const std::string& );
+    std::string getBasePath();
+    std::string getPathToFolder(const FOLDER& );
+
+    std::string makePathToFile(const FOLDER& , const std::string& );
 }
 
 namespace RandomExtensions {

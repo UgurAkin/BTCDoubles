@@ -36,8 +36,9 @@ static const int SIM_MAX_AMT_USERS = 50;
 int main(int argc, char* argv[]){
     
     std::string arg0(argv[0]);
-    std::string base = FileRW::getBasePath(arg0);
-    std::string usersFileURI = base +  "/../../TextFiles/rndUsers.csv";
+    Path::setBasePath(arg0);
+    std::string usersFileName = "rndUsers.csv";
+    std::string usersFileURI = Path::makePathToFile(Path::FOLDER::CSVFILES, usersFileName);
 
     auto allUsers = UserList::loadFromFile(usersFileURI);
     int amtUsers = RandomExtensions::randomInt(SIM_MIN_AMT_USERS, SIM_MAX_AMT_USERS);
@@ -85,6 +86,7 @@ int main(int argc, char* argv[]){
     
 
     auto fileContentsToWrite = courtAStr + courtBStr + sparesStr;
-    std::string outputFileURI = base + "/../../TextFiles/doubles_fixture_0.txt";
+    std::string outputFileName = "doubles_fixture_0.txt";
+    std::string outputFileURI = Path::makePathToFile(Path::FOLDER::TEXTFILES, outputFileName);
     FileRW::writeToFile(outputFileURI, fileContentsToWrite);
 }

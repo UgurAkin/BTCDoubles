@@ -54,10 +54,6 @@ namespace StringExtensions {
 }
 
 namespace FileRW {
-	std::string getBasePath(const std::string& arg0){
-    	auto result = arg0.substr(0, arg0.find_last_of("/"));
-		return result;
-	}
 
 	std::vector<std::string> 
 	readLinesInFile(
@@ -141,6 +137,38 @@ namespace FileRW {
 		return FileRW::writeToFile(fileURI, concatted);
 	}
 
+}
+
+namespace Path {
+	std::string EXECUTION_BASE_PATH = "";
+
+	const 
+	std::vector<std::string> RELATIVE_PATH_TO_FOLDER
+	{
+		"../../TextFiles/",
+		"../../CSVFiles/"
+	};
+	void setBasePath(const std::string& arg0) {
+		auto result = arg0.substr(0, arg0.find_last_of("/"));
+		EXECUTION_BASE_PATH = result;
+	}
+
+	std::string getBasePath(){
+    	return EXECUTION_BASE_PATH;
+	}
+
+	std::string getPathToFolder(const FOLDER& folderCode){
+		std::string base = getBasePath();
+		std::string relativePathSuffix = RELATIVE_PATH_TO_FOLDER[folderCode];
+		std::string resultPath = base + "/" + relativePathSuffix;
+		return resultPath;
+	}
+
+	std::string makePathToFile(const FOLDER& folderCode, const std::string& fileName){
+		std::string folderPath = getPathToFolder(folderCode);
+		std::string pathToFile = folderPath + fileName;
+		return pathToFile;
+	}
 }
 
 namespace RandomExtensions {

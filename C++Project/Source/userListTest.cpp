@@ -21,10 +21,11 @@
 int main(int argc, char const *argv[])
 {	
 	std::string arg0(argv[0]);
-	auto base = FileRW::getBasePath(arg0);
-	auto filePath = base + "/../../TextFiles/Users.csv";
+	Path::setBasePath(arg0);
+	std::string fileName = "Users.csv";
+	std::string fileURI = Path::makePathToFile(Path::FOLDER::CSVFILES, fileName);
 
-	auto users = UserList::loadFromFile(filePath);
+	auto users = UserList::loadFromFile(fileURI);
 
 	std::cout << "No order: " << std::endl;
 	for(auto user : *users){
@@ -39,7 +40,7 @@ int main(int argc, char const *argv[])
 	std::cout << "Order by last name: " << std::endl;
 	users->orderByAscending(User::PROPERTIES::LAST);
 	std::cout << "NOTE: Saving file in ascending last name order" << endl;
-	users->save(filePath);
+	users->save(fileURI);
 	std::cout << *users << endl;	
 
 	std::cout << "Order by rank: " << std::endl;

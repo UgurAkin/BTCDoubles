@@ -2,8 +2,11 @@
 2. Migration to unique + shared pointers.
 3. Clean up of source (mains) files.
 3.5. Clean up namespaces into files. (?) 
+3.75 Implement command line argument reads wherever useful
+     in the source (mains) files.
 4. Scripts to automate simulation process.
 
 5. Implement robust testing system. 
    Unit tests and automation scripts.
+
 
