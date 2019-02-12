@@ -27,9 +27,9 @@
 #include <memory>
 #include "User.h"
 
-class UserList : public vector<User*>
+class UserList : public vector<std::shared_ptr<User> >
 {	
-	typedef vector<User*> base;
+	typedef vector<std::shared_ptr<User> > base;
 	static const char DELIM = ',';
 		
 	public:
@@ -40,7 +40,7 @@ class UserList : public vector<User*>
 	};
 
 	UserList();
-	UserList(const std::vector<User*> &);
+	UserList(const std::vector<std::shared_ptr<User> > &);
 
 	void orderByAscending(User::PROPERTIES);
 	void orderByDescending(User::PROPERTIES );

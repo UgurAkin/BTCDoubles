@@ -29,7 +29,7 @@
 
 UserList::UserList() : base() {};
 
-UserList::UserList(const std::vector<User*> &vec) : base(vec) {};
+UserList::UserList(const std::vector<std::shared_ptr<User> > &vec) : base(vec) {};
 
 
 void UserList::orderByAscending(User::PROPERTIES orderProperty)
@@ -56,7 +56,14 @@ void UserList::orderByAscending(User::PROPERTIES orderProperty)
 		break;
 	}
 
-	std::sort(this->begin(), this->end(), comparisonFunction);
+	auto sortFunction = [comparisonFunction](std::shared_ptr<User> a, std::shared_ptr<User>b){ 
+				return (*comparisonFunction)(a.get(), b.get());
+			  };
+
+	std::sort(this->begin(), 
+			  this->end(), 
+			  sortFunction);
+
 }
 
 void UserList::orderByDescending(User::PROPERTIES orderProperty)
@@ -83,7 +90,13 @@ void UserList::orderByDescending(User::PROPERTIES orderProperty)
 		break;
 	}
 
-	std::sort(this->begin(), this->end(), comparisonFunction);
+	auto sortFunction = [comparisonFunction](std::shared_ptr<User> a, std::shared_ptr<User>b){ 
+				return (*comparisonFunction)(a.get(), b.get());
+			  };
+
+	std::sort(this->begin(), 
+			  this->end(), 
+			  sortFunction);
 }
 
 bool UserList::save(
@@ -119,7 +132,7 @@ std::unique_ptr<UserList> UserList::loadFromFile(const string &fileURI)
 		string first = tokens[firstIndex];
 		string last = tokens[lastIndex];
 
-		User *newUser = new User(first, last, rank);
+		std::shared_ptr<User> newUser = std::make_shared<User>(first, last, rank);
 		result->push_back(newUser);
 	}
 	return result;
@@ -147,7 +160,7 @@ bool UserList::writeToFile(
 
 std::string UserList::toString() const {
 	std::string result = "";
-	for(User* user : *this){
+	for(auto user : *this){
 		result += user->toString() + "\n";
 	}
 	return result;
@@ -155,7 +168,7 @@ std::string UserList::toString() const {
 
 std::string UserList::toCSV() const {
 	std::string result = "";
-	for(User* user : *this){
+	for(auto user : *this){
 		result += user->toCSV() + "\n";
 	}
 	return result;
@@ -173,7 +186,7 @@ std::unique_ptr<UserList> UserList::make(const std::vector<std::string> &names){
 		auto firstName = fullName[0];
 		auto lastName = fullName[1];
 		auto rank = i+1;
-		User* user = new User(firstName, lastName, rank);
+		auto user = std::make_shared<User>(firstName, lastName, rank);
 		result->push_back(user);
 	}
 	

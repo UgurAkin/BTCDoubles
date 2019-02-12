@@ -2,85 +2,85 @@ Group A 8:00-10:00 PM
 
 Court 1
 
-1, George Lou
-4, Ross Hogge
-7, Forrest Gratz
-8, Marcellus Torres
+1, Deon Lundholm
+2, Arthur Granada
+7, Juan Scheiber
+8, Jared Preiss
 
 Court 2
 
-9, Bradly Subia
-12, Theo Redd
-13, Josh Holm
-17, Song Cartwright
+9, Cedrick Litt
+10, Mariano Bester
+11, Pat Croswell
+12, Dudley Cardella
 
 Court 3
 
-18, Samual Weisinger
-19, Stewart Riggan
-21, Cyril Huntzinger
-22, Fred Gales
+13, David Devera
+14, Halina Oliverio
+15, Mui Sawin
+16, Boris Bartholow
 
 Court 4
 
-24, Mariano Bester
-25, Shantel Korn
-26, Mallie Cumbee
-29, Ruthann Schug
+19, Norberto Brenneman
+21, Bobby Sinha
+22, Shawn Deangelo
+24, Rickie Surprenant
 
 Court 5
 
-31, Irving Meagher
-32, Clement Magnani
-36, Normand Lintz
-38, Dave Pence
+25, Christian Langlinais
+26, Jalisa Hockaday
+27, Lester Boyle
+29, Brock Gascon
 
 
 Group B 6:00-8:00 PM
 
 Court 6
 
-39, Zachery Cabe
-40, Cedrick Litt
-41, Calista Kontos
-42, Enoch Hottinger
+30, Faustino Seabaugh
+31, Rhett Westover
+32, Collin Witzel
+33, Levi Garibay
 
 Court 7
 
-44, Dominick Cannella
-45, Boris Bartholow
-46, Ambrose Mapp
-47, Colby Vannest
+35, Ruthann Schug
+36, Linh Ringwood
+38, Calista Kontos
+39, Emerson Guerra
 
 Court 8
 
-49, Bryce Poff
-50, Wallace Byas
-52, Dwain Schwebach
-53, Stevie Nosal
+41, Bernardo Mcatee
+43, Enoch Hottinger
+44, Dane Cotner
+45, Kent Borth
 
 Court 9
 
-55, Virgil Terwilliger
-56, Rex Medal
-60, Chadwick Mazzotta
-61, Jorge Hatton
+46, Ron Winebrenner
+48, Virgil Terwilliger
+49, Julius Cagley
+52, Bradly Subia
 
 Court 10
 
-62, Kyong Antonio
-63, Mui Sawin
-64, Stephan Trojacek
-66, Christian Langlinais
+53, Raul Devaney
+54, Samual Weisinger
+56, Bryce Poff
+58, Lauren Ricard
 
 Court 11
 
-68, Dane Cotner
-69, Lorenzo Como
-70, Naida Antoine
-72, Phoebe Frost
+60, Dario Avent
+62, Laveta Crouch
+63, Renato Champney
+64, Beulah Hunsucker
 
 
 Spares
 
-1. 75, Ilse Grenier
+1. 66, Clint Bissette
